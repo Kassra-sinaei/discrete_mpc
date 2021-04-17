@@ -18,15 +18,20 @@ class MPC {
 	friend int main();
 	
 public:
-	MPC(int Np, int Nc);
-
+	MPC(int Np, int Nc, double timeStep);
+	void setPlantModel(MatrixXd A, MatrixXd B, MatrixXd C);
 private:
-	MatrixXd model;
-	int Np;
-	int Nc;
+	double time_step;
+	// MPC Controoler Gains for Prediction
+	MatrixXd phi;
+	MatrixXd F;
+
+	// MPC Controoler Horizons
+	int Np; // prediction Horizon
+	int Nc; // control Horizon
 
 	MatrixXd* c2d(MatrixXd A, MatrixXd B);
-	MatrixXd* extrmodel(MatrixXd A, VectorXd B, VectorXd C);
+	MatrixXd* extrmodel(MatrixXd A, MatrixXd B, MatrixXd C);
 	MatrixXd* mpcgains(MatrixXd Ap, MatrixXd Bp, MatrixXd Cp);
 	double recede(MatrixXd Xf, MatrixXd F, MatrixXd phi, double rw, double rs);
 };
